@@ -1,6 +1,12 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-
+from django.contrib.admin import ModelAdmin
 from users.models import User
-# TODO Aдмика для пользователя - как реализовать ее можно подсмотреть в документаци django
-# TODO Обычно её всегда оформляют, но в текущей задачи делать её не обязательно
+
+
+@admin.register(User)
+class UserAdmin(ModelAdmin):
+    list_display = ('email', 'first_name', 'last_name', 'is_staff')
+    list_filter = ('is_active', 'email', 'first_name', 'last_name')
+    search_fields = ('email', 'first_name', 'last_name')
+    ordering = ('email',)
+    exclude = ('password', 'last_login')
